@@ -3,7 +3,6 @@ require "open-uri"
 
 class GamesController < ApplicationController
   def new
-    # @letters = ('a'..'z').to_a.sample(10)
     letterse = []
     10.times { letterse << ('a'..'z').to_a.sample }
     @letters = letterse
@@ -17,6 +16,7 @@ class GamesController < ApplicationController
       @result = "Sorry but #{@word.upcase} can't be built with #{@word.upcase}"
     elsif word_checked['found'] == true
       @score = @word.length * 100
+      cookies[:score_all] = cookies[:score_all].to_i + @score
       @result = "Congratulation! #{@word.upcase} is a valid English word! You won #{@score} points"
     elsif word_checked['error'] == 'word not found'
       @result = "Sorry but #{@word.upcase} does not seem to be a valid English word..."
